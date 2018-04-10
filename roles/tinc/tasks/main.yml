@@ -1,0 +1,32 @@
+---
+
+- file: path={{ansible_env.HOME}}/git/tinc/tinc/mana state=directory mode=0777 recurse=yes
+
+- name: "copy for x86_64"
+  copy: src=../files/Dockerfile dest={{ansible_env.HOME}}/git/tinc/ mode=777
+  when: (ansible_machine == 'x86_64')
+
+- name: "copy for armv7l"
+  copy: src=../files/Dockerfile.armv7l dest={{ansible_env.HOME}}/git/tinc/Dockerfile mode=777
+  when: (ansible_machine == 'armv7l')
+
+
+- name: "copy for aarch64"
+  copy: src=../files/Dockerfile.aarch64 dest={{ansible_env.HOME}}/git/tinc/Dockerfile mode=777
+  when: (ansible_machine == 'aarch64')
+
+- copy: src=../files/tinc/mana dest={{ansible_env.HOME}}/git/tinc/tinc/ mode=777
+
+- template: src=../templates/tinc-up.j2 dest={{ansible_env.HOME}}/git/tinc/tinc/mana/tinc-up mode=755
+- template: src=../templates/tinc.conf.j2 dest={{ansible_env.HOME}}/git/tinc/tinc/mana/tinc.conf mode=644
+- command: /usr/bin/docker stop tinc ; exit 0
+  ignore_errors: yes
+- command: /usr/bin/docker rm tinc ; exit 0
+  ignore_errors: yes
+- command: /usr/bin/docker rmi mdef/tinc ; exit 0
+  ignore_errors: yes
+- command: /usr/bin/docker build -t mdef/tinc .
+  args:
+    chdir: "{{ansible_env.HOME}}/git/tinc"
+
+- command: /usr/bin/docker run -d -e TZ=Europe/Riga --net={{tinc_net}} --hostname={{inventory_hostname}} --restart=always --dns=10.0.0.15 --dns=10.0.0.2 --dns=10.0.0.8 --privileged -v {{ansible_env.HOME}}/git/tinc/tinc/:/etc/tinc/ --name tinc mdef/tinc
