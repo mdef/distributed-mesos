@@ -1,0 +1,98 @@
+{
+  "acceptedResourceRoles": [
+    "*"
+  ],
+  "args": null,
+  "backoffFactor": 1.15,
+  "backoffSeconds": 1,
+  "cmd": null,
+  "constraints": [],
+  "container": {
+    "docker": {
+      "forcePullImage": false,
+      "image": "mdef/mesos-gluster",
+      "network": "USER",
+      "parameters": [
+        {
+          "key": "rm",
+          "value": "true"
+        },
+        {
+        "key": "env",
+        "value": "MESOS_TASK_ID=gluster2"
+        },
+        {
+        "key": "env",
+        "value": "GLUSTER_APP_ID=gluster"
+        },
+        {
+        "key": "env",
+        "value": "MARATHON_URL=http://marathon.mesos:8080"
+        }
+      ],
+      "portMappings": [],
+      "privileged": false
+    },
+    "type": "DOCKER",
+    "volumes": []
+  },
+  "cpus": 1,
+  "dependencies": [],
+  "deployments": [],
+  "disk": 0,
+  "env": {},
+  "executor": "",
+  "fetch": [],
+  "gpus": 0,
+  "healthChecks": [],
+  "id": "/gluster2",
+  "instances": 0,
+  "ipAddress": {
+    "networkName": "container:tinc"
+  },
+  "killSelection": "YOUNGEST_FIRST",
+  "labels": {},
+   "ipAddress": {
+    "networkName": "container:tinc"
+  },
+  "lastTaskFailure": {
+    "appId": "/gluster1",
+    "host": "10.0.0.16",
+    "message": "Failed to launch container: Failed to run 'docker -H unix:///var/run/docker.sock pull mdef/mesos-gluster:latest': exited with status 1; stderr='Error response from daemon: repository mdef/mesos-gluster not found: does not exist or no pull access\n'",
+    "slaveId": "f69a685f-54aa-4b3e-aee1-bbb0bafd9279-S0",
+    "state": "TASK_FAILED",
+    "taskId": "gluster.6edea186-e11b-11e7-8aa6-6e694a389a27",
+    "timestamp": "2017-12-14T22:09:24.144Z",
+    "version": "2017-12-14T22:07:58.039Z"
+  },
+  "maxLaunchDelaySeconds": 3600,
+  "mem": 128,
+  "portDefinitions": [],
+  "ports": [],
+  "readinessChecks": [],
+  "requirePorts": false,
+  "residency": null,
+  "secrets": {},
+  "storeUrls": [],
+  "taskKillGracePeriodSeconds": null,
+  "tasks": [],
+  "tasksHealthy": 0,
+  "tasksRunning": 0,
+  "tasksStaged": 0,
+  "tasksUnhealthy": 0,
+  "unreachableStrategy": {
+    "expungeAfterSeconds": 600,
+    "inactiveAfterSeconds": 300
+  },
+  "upgradeStrategy": {
+    "maximumOverCapacity": 1,
+    "minimumHealthCapacity": 1
+  },
+  "uris": [],
+  "user": null,
+  "version": "2017-12-14T22:18:50.769Z",
+  "versionInfo": {
+    "lastConfigChangeAt": "2017-12-14T22:18:50.769Z",
+    "lastScalingAt": "2017-12-14T22:18:50.769Z"
+  }
+}

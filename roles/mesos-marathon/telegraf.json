@@ -1,0 +1,97 @@
+{
+  "id": "telegraf",
+  "cmd": null,
+  "args": null,
+  "user": null,
+  "env": {},
+  "instances": 0,
+  "cpus": 0.1,
+  "mem": 128,
+  "disk": 0,
+  "gpus": 0,
+  "constraints": [
+    [
+      "hostname",
+      "MAX_PER",
+      "1"
+    ],
+    [
+      "hostname",
+      "UNLIKE",
+      "10.0.0.(8)"
+    ],
+    [
+      "arch",
+      "UNLIKE",
+      "armhf"
+    ]
+  ],
+  "uris": [],
+  "fetch": [],
+  "storeUrls": [],
+  "backoffSeconds": 1,
+  "backoffFactor": 1.15,
+  "maxLaunchDelaySeconds": 3600,
+  "container": {
+    "type": "DOCKER",
+    "volumes": [
+      {
+        "containerPath": "/var/run/docker.sock",
+        "hostPath": "/var/run/docker.sock",
+        "mode": "RO"
+      },
+      {
+        "containerPath": "/var/run/utmp",
+        "hostPath": "/var/run/utmp",
+        "mode": "RO"
+      }
+    ],
+    "docker": {
+      "image": "appcelerator/telegraf",
+      "network": "USER",
+      "portMappings": [],
+      "privileged": false,
+      "parameters": [],
+      "forcePullImage": true,
+      "parameters": [
+            {
+              "key": "env",
+              "value": "INFLUXDB_URL=http://10.0.0.15:8086/"
+            },
+            {
+              "key": "env",
+              "value": "INFLUXDB_RETENTION_POLICY=week_only"
+            },
+            {
+              "key": "rm",
+              "value": "true"
+            },
+            {
+              "key": "env",
+              "value": "INTERVAL=60s"
+            }
+
+          ]
+    }
+  },
+  "healthChecks": [],
+  "readinessChecks": [],
+  "dependencies": [],
+  "upgradeStrategy": {
+    "minimumHealthCapacity": 1,
+    "maximumOverCapacity": 1
+  },
+  "labels": {},
+  "ipAddress": {
+    "networkName": "container:tinc"
+  },
+  "residency": null,
+  "secrets": {},
+  "taskKillGracePeriodSeconds": null,
+  "killSelection": "YOUNGEST_FIRST",
+  "acceptedResourceRoles": [
+    "*"
+  ],
+  "requirePorts": false,
+  "version": "2017-07-13T16:16:48.628Z"
+}
